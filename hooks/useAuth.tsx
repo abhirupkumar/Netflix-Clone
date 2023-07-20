@@ -56,8 +56,8 @@ interface Props{
         onAuthStateChanged(auth, (user) => {
           if (user) {
             // Logged in...
-            fetchSubs();
             setUser(user)
+            fetchSubs(user);
             setLoading(false)
           } else {
             // Not logged in...
@@ -77,8 +77,9 @@ interface Props{
         }
       }, [error])
 
-      const fetchSubs = async () : Promise<void> => {
-              const isSub = await isSubscribed(user);
+      const fetchSubs = async (userD: User) : Promise<void> => {
+              const isSub = await isSubscribed(userD);
+
           }
   
     const signUp = async (email: string, password: string) => {
@@ -95,8 +96,7 @@ interface Props{
           setError(err.message)
         })
         .finally(() => {
-          setLoading(false)
-          setError(null)})
+          setLoading(false)})
     }
   
     const signIn = async (email: string, password: string) => {
@@ -113,8 +113,7 @@ interface Props{
           setError(err.message)
         })
         .finally(() => {
-          setLoading(false)
-          setError(null)})
+          setLoading(false)})
     }
 
     const isSubscribed = async (user: User | null) : Promise<boolean | null> => {
@@ -148,8 +147,7 @@ interface Props{
           setError(err.message)
         })
         .finally(() => {
-          setLoading(false)
-          setError(null)})
+          setLoading(false)})
     }
   
     const memoedValue = useMemo(

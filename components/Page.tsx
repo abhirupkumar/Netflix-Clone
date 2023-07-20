@@ -14,6 +14,7 @@ import Loader from './Loader';
 import useList from '@/hooks/useList';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/firebase';
+import { User } from 'firebase/auth';
 
 interface Props {
     netflixOriginals: Movie[]
@@ -42,10 +43,18 @@ const Page = ({netflixOriginals,
     const movie = useRecoilValue(movieState);
     const list = useList(user?.uid)
     useEffect(() => {
-      fetchSubscription()
-    }, [])
+      if(user != null)
+        fetchSubscription()
+    }, [user])
 
-    const fetchSubscription = async () => {
+    const fetchSubscription = async () : Promise<void> => {
+      const isSub = await isSubscribed(user);
+      setSubscription(isSub)
+      
+      console.log(subscription)
+    }
+
+    const isSubscribed = async (user: User | null) : Promise<boolean | null> => {
       if(user == null) return null;
       const userRef =  doc(db, "subscriptions", user.uid);
       const docSnap = await getDoc(userRef);
@@ -55,10 +64,10 @@ const Page = ({netflixOriginals,
         const newdate = new Date().toISOString()
         const expiryDate = data.subscriptionExpiryDate
         if(newdate > expiryDate){
-          setSubscription(false)
+          return false
         }
         else{
-          setSubscription(true)
+          return true;
         }
       }
     }
@@ -67,7 +76,7 @@ const Page = ({netflixOriginals,
     if (loading || subscription === null) return <Loader />;
 
     if (!subscription) return <Plans />;
-    console.log(subscription)
+    console.log("subscription: ", subscription)
 
   return (
     <div className={`relative h-screen bg-gradient-to-b lg:h-[140vh] ${
