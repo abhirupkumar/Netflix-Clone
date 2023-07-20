@@ -1,11 +1,8 @@
 "use client";
 
-// import { Product } from '@stripe/firestore-stripe-payments'
-import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
-// import { loadCheckout } from '../lib/stripe'
 import Loader from './Loader'
 import { AiOutlineCheck } from 'react-icons/ai'
 import Table from './Table';
