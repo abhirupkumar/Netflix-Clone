@@ -18,6 +18,10 @@ const Banner = ({ netflixOriginals } : Props) => {
   const [showModal, setShowModal] = useRecoilState(modalState)
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState)
 
+  const truncate = (str: string) => {
+    return str.length > 250 ? str.substring(0, 250) + "..." : str;
+  }
+
   useEffect(() => {
     setMovie(
       netflixOriginals[Math.floor(Math.random() * netflixOriginals.length)]
@@ -40,7 +44,7 @@ const Banner = ({ netflixOriginals } : Props) => {
         {movie?.title || movie?.name || movie?.original_name}
       </h1>
       <p className="max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-xl lg:text-lg">
-        {movie?.overview}
+        {movie?.overview && truncate(movie?.overview)}
       </p>
 
       <div className="flex space-x-3">
