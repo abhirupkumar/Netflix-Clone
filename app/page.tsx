@@ -1,9 +1,5 @@
 import { fetchAllData } from '@/actions/actions'
-import Banner from '@/components/Banner'
-import Header from '@/components/Header'
-import Image from 'next/image';
-import { Movie, Plan } from '../typings'
-import Row from '@/components/Row';
+import { Movie } from '../typings'
 import Page from '@/components/Page';
 
 interface Props {
