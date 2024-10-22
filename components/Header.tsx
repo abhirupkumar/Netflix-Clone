@@ -35,6 +35,7 @@ function Header() {
           height={100}
           className="cursor-pointer object-contain"
         />
+        CLONE
 
         <BasicMenu />
 
